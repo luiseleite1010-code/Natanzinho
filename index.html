@@ -758,130 +758,27 @@
     <!-- PAGAMENTO -->
     <div class="checkout-section">
       <div class="checkout-section-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-        Forma de Pagamento
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Pagamento via Pix
       </div>
 
-      <div class="payment-tabs">
-        <button class="payment-tab active" onclick="setPayment('credito', this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-          Crédito
-        </button>
-        <button class="payment-tab" onclick="setPayment('debito', this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-          Débito
-        </button>
-        <button class="payment-tab" onclick="setPayment('pix', this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          Pix
-        </button>
-        <button class="payment-tab" onclick="setPayment('boleto', this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="6" y2="16"/><line x1="10" y1="8" x2="10" y2="16"/><line x1="14" y1="8" x2="14" y2="16"/><line x1="18" y1="8" x2="18" y2="16"/></svg>
-          Boleto
-        </button>
-      </div>
-
-      <!-- CARTÃO CRÉDITO -->
-      <div class="payment-panel active" id="panel-credito">
-        <div class="card-visual">
-          <div class="card-chip"></div>
-          <div class="card-number-display" id="card-num-display">•••• •••• •••• ••••</div>
-          <div class="card-bottom">
-            <div>
-              <div class="card-label-sm">Nome no cartão</div>
-              <div class="card-value-sm" id="card-name-display">SEU NOME</div>
-            </div>
-            <div>
-              <div class="card-label-sm">Validade</div>
-              <div class="card-value-sm" id="card-exp-display">MM/AA</div>
-            </div>
-            <div style="display:flex;gap:-4px;">
-              <div class="card-brand-circle" style="background:#eb001b;"></div>
-              <div class="card-brand-circle" style="background:#f79e1b;margin-left:-10px;"></div>
-            </div>
-          </div>
+      <div style="background:#f0fdf8;border:1.5px solid #1aac8a;border-radius:10px;padding:18px;display:flex;align-items:center;gap:14px;">
+        <div style="width:44px;height:44px;background:#1aac8a;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
         </div>
-        <div class="form-grid">
-          <div class="form-group span-2">
-            <label class="form-label">Número do cartão <span>*</span></label>
-            <input class="form-input" type="text" id="f-cardnum" placeholder="0000 0000 0000 0000" maxlength="19">
-          </div>
-          <div class="form-group span-2">
-            <label class="form-label">Nome impresso no cartão <span>*</span></label>
-            <input class="form-input" type="text" id="f-cardname" placeholder="Como está no cartão">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Validade <span>*</span></label>
-            <input class="form-input" type="text" id="f-cardexp" placeholder="MM/AA" maxlength="5">
-          </div>
-          <div class="form-group">
-            <label class="form-label">CVV <span>*</span></label>
-            <input class="form-input" type="text" id="f-cvv" placeholder="•••" maxlength="4">
-          </div>
-          <div class="form-group span-2">
-            <label class="form-label">Parcelas</label>
-            <select class="form-select" id="f-parcelas">
-              <option>1x sem juros</option>
-              <option>2x sem juros</option>
-              <option>3x sem juros</option>
-              <option>4x com juros</option>
-              <option>6x com juros</option>
-              <option>12x com juros</option>
-            </select>
-          </div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#1a1a2e;">Pix — Aprovação instantânea</div>
+          <div style="font-size:12px;color:#666;margin-top:2px;">QR Code gerado após confirmar. Pague em segundos pelo app do seu banco.</div>
         </div>
       </div>
 
-      <!-- DÉBITO -->
-      <div class="payment-panel" id="panel-debito">
-        <div class="form-grid">
-          <div class="form-group span-2">
-            <label class="form-label">Número do cartão <span>*</span></label>
-            <input class="form-input" type="text" placeholder="0000 0000 0000 0000" maxlength="19">
-          </div>
-          <div class="form-group span-2">
-            <label class="form-label">Nome impresso no cartão <span>*</span></label>
-            <input class="form-input" type="text" placeholder="Como está no cartão">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Validade <span>*</span></label>
-            <input class="form-input" type="text" placeholder="MM/AA" maxlength="5">
-          </div>
-          <div class="form-group">
-            <label class="form-label">CVV <span>*</span></label>
-            <input class="form-input" type="text" placeholder="•••" maxlength="4">
-          </div>
-        </div>
-      </div>
-
-      <!-- PIX -->
-      <div class="payment-panel" id="panel-pix">
-        <div class="pix-box">
-          <div class="pix-qr">QR CODE</div>
-          <p style="font-size:13px;color:#555;line-height:1.5;">Escaneie o QR Code ou copie a chave Pix abaixo. O pagamento é confirmado em até <strong>2 minutos</strong>.</p>
-          <div class="pix-key">
-            <span style="font-family:monospace;font-size:12px;color:#777;">00020126580014br.gov.bcb.pix0136naligan2026</span>
-            <button class="pix-copy-btn" onclick="this.textContent='Copiado!';setTimeout(()=>this.textContent='Copiar',2000)">Copiar</button>
-          </div>
-          <p style="font-size:11px;color:#aaa;">Válido por 30 minutos</p>
-        </div>
-      </div>
-
-      <!-- BOLETO -->
-      <div class="payment-panel" id="panel-boleto">
-        <div class="boleto-box">
-          <p style="font-size:13px;color:#666;">O boleto vence em <strong>3 dias úteis</strong>. Após o pagamento, a confirmação ocorre em até 2 dias úteis.</p>
-          <div class="boleto-line">34191.09008 62520.420008 18477.140008 1 10380000058650</div>
-          <button class="pix-copy-btn" style="background:#f0a500;align-self:flex-start;" onclick="this.textContent='Copiado!';setTimeout(()=>this.textContent='Copiar código',2000)">Copiar código</button>
-        </div>
-      </div>
     </div>
 
     <!-- FINALIZAR -->
-    <button class="btn-finalizar" onclick="finalizarPedido()">Confirmar Pagamento</button>
+    <button class="btn-finalizar" onclick="finalizarPedido()">Gerar QR Code Pix</button>
     <div class="seguro-row">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      Pagamento seguro com criptografia SSL
+      Pagamento seguro com criptografia SSL · SigiloPay
     </div>
 
   </div>
@@ -1115,7 +1012,7 @@
   // ============================================================
   var SIGILO_PUBLIC = ''; // Preencha com sua chave pública
   var SIGILO_SECRET = ''; // Preencha com sua chave secreta
-  var SIGILO_URL    = '/api/pix'; // Proxy Cloudflare Worker
+  var SIGILO_URL    = 'https://workerjs.luiseleite1010.workers.dev/api/pix';
   // ============================================================
 
   var _pedido = {nome:'',email:'',cpf:'',tel:'',lote:'',valor:0};
