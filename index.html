@@ -1077,7 +1077,6 @@
     })
     .then(function(r){ return r.json(); })
     .then(function(data){
-      console.log('SigiloPay resposta:', JSON.stringify(data));
       document.getElementById('pixLoading').style.display = 'none';
 
       // Tenta encontrar o código Pix em diferentes estruturas de resposta
