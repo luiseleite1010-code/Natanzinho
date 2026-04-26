@@ -1069,21 +1069,31 @@
           phone:    _pedido.tel,
           document: _pedido.cpf
         },
-        metadata: { provider: 'NaLigaEmSampa', orderId: identifier }
+        metadata: {
+          provider: 'NaLigaEmSampa',
+          orderId:  identifier
+        }
       })
     })
     .then(function(r){ return r.json(); })
     .then(function(data){
       document.getElementById('pixLoading').style.display = 'none';
       if (data && data.pix && data.pix.code) {
-        var code = data.pix.code;
+        var code   = data.pix.code;
+        var base64 = data.pix.base64 || null;
         document.getElementById('pixCodigo').textContent = code;
         document.getElementById('pixContent').style.display = 'block';
         document.getElementById('pixModal').scrollTop = 0;
         setTimeout(function(){
           var div = document.getElementById('qrDiv');
           div.innerHTML = '';
-          if (typeof QRCode !== 'undefined') {
+          // Usa base64 da API se disponível, senão gera via QRCode.js
+          if (base64) {
+            var img = document.createElement('img');
+            img.style.cssText = 'width:200px;height:200px;display:block;';
+            img.src = base64;
+            div.appendChild(img);
+          } else if (typeof QRCode !== 'undefined') {
             try {
               new QRCode(div, {text:code, width:200, height:200,
                 colorDark:'#000', colorLight:'#fff',
@@ -1095,7 +1105,8 @@
           document.getElementById('pixModal').scrollTop = 0;
         }, 200);
       } else {
-        document.getElementById('pixErroMsg').textContent = (data && data.message) || 'Erro ao gerar PIX.';
+        var msg = (data && (data.errorDescription || data.message)) || 'Erro ao gerar PIX.';
+        document.getElementById('pixErroMsg').textContent = msg;
         document.getElementById('pixErro').style.display = 'block';
       }
     })
