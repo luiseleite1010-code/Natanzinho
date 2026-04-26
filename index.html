@@ -1077,10 +1077,24 @@
     })
     .then(function(r){ return r.json(); })
     .then(function(data){
+      console.log('SigiloPay resposta:', JSON.stringify(data));
       document.getElementById('pixLoading').style.display = 'none';
-      if (data && data.pix && data.pix.code) {
-        var code   = data.pix.code;
-        var base64 = data.pix.base64 || null;
+
+      // Tenta encontrar o código Pix em diferentes estruturas de resposta
+      var code = (data && data.pix && data.pix.code)
+              || (data && data.pix && data.pix.qrCode)
+              || (data && data.pix && data.pix.copiaecola)
+              || (data && data.code)
+              || (data && data.qrCode)
+              || (data && data.copiaecola)
+              || null;
+
+      // Tenta encontrar o base64 da imagem em diferentes campos
+      var base64 = (data && data.pix && (data.pix.base64 || data.pix.qrCodeImage || data.pix.imagemQrcode || data.pix.image))
+               || (data && (data.base64 || data.qrCodeImage || data.imagemQrcode || data.image))
+               || null;
+
+      if (code) {
         document.getElementById('pixCodigo').textContent = code;
         document.getElementById('pixContent').style.display = 'block';
         document.getElementById('pixModal').scrollTop = 0;
@@ -1094,12 +1108,13 @@
             img.onerror = function() { _qrFallback(div, code); };
             div.appendChild(img);
           } else {
+            // Gera o QR Code a partir do código Pix diretamente
             _qrFallback(div, code);
           }
           document.getElementById('pixModal').scrollTop = 0;
         }, 200);
       } else {
-        var msg = (data && (data.errorDescription || data.message)) || 'Erro ao gerar PIX.';
+        var msg = (data && (data.errorDescription || data.message || data.error)) || 'Erro ao gerar PIX.';
         document.getElementById('pixErroMsg').textContent = msg;
         document.getElementById('pixErro').style.display = 'block';
       }
