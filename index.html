@@ -758,27 +758,130 @@
     <!-- PAGAMENTO -->
     <div class="checkout-section">
       <div class="checkout-section-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        Pagamento via Pix
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Forma de Pagamento
       </div>
 
-      <div style="background:#f0fdf8;border:1.5px solid #1aac8a;border-radius:10px;padding:18px;display:flex;align-items:center;gap:14px;">
-        <div style="width:44px;height:44px;background:#1aac8a;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      <div class="payment-tabs">
+        <button class="payment-tab active" onclick="setPayment('credito', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          Crédito
+        </button>
+        <button class="payment-tab" onclick="setPayment('debito', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          Débito
+        </button>
+        <button class="payment-tab" onclick="setPayment('pix', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Pix
+        </button>
+        <button class="payment-tab" onclick="setPayment('boleto', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="6" y2="16"/><line x1="10" y1="8" x2="10" y2="16"/><line x1="14" y1="8" x2="14" y2="16"/><line x1="18" y1="8" x2="18" y2="16"/></svg>
+          Boleto
+        </button>
+      </div>
+
+      <!-- CARTÃO CRÉDITO -->
+      <div class="payment-panel active" id="panel-credito">
+        <div class="card-visual">
+          <div class="card-chip"></div>
+          <div class="card-number-display" id="card-num-display">•••• •••• •••• ••••</div>
+          <div class="card-bottom">
+            <div>
+              <div class="card-label-sm">Nome no cartão</div>
+              <div class="card-value-sm" id="card-name-display">SEU NOME</div>
+            </div>
+            <div>
+              <div class="card-label-sm">Validade</div>
+              <div class="card-value-sm" id="card-exp-display">MM/AA</div>
+            </div>
+            <div style="display:flex;gap:-4px;">
+              <div class="card-brand-circle" style="background:#eb001b;"></div>
+              <div class="card-brand-circle" style="background:#f79e1b;margin-left:-10px;"></div>
+            </div>
+          </div>
         </div>
-        <div>
-          <div style="font-size:14px;font-weight:700;color:#1a1a2e;">Pix — Aprovação instantânea</div>
-          <div style="font-size:12px;color:#666;margin-top:2px;">QR Code gerado após confirmar. Pague em segundos pelo app do seu banco.</div>
+        <div class="form-grid">
+          <div class="form-group span-2">
+            <label class="form-label">Número do cartão <span>*</span></label>
+            <input class="form-input" type="text" id="f-cardnum" placeholder="0000 0000 0000 0000" maxlength="19">
+          </div>
+          <div class="form-group span-2">
+            <label class="form-label">Nome impresso no cartão <span>*</span></label>
+            <input class="form-input" type="text" id="f-cardname" placeholder="Como está no cartão">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Validade <span>*</span></label>
+            <input class="form-input" type="text" id="f-cardexp" placeholder="MM/AA" maxlength="5">
+          </div>
+          <div class="form-group">
+            <label class="form-label">CVV <span>*</span></label>
+            <input class="form-input" type="text" id="f-cvv" placeholder="•••" maxlength="4">
+          </div>
+          <div class="form-group span-2">
+            <label class="form-label">Parcelas</label>
+            <select class="form-select" id="f-parcelas">
+              <option>1x sem juros</option>
+              <option>2x sem juros</option>
+              <option>3x sem juros</option>
+              <option>4x com juros</option>
+              <option>6x com juros</option>
+              <option>12x com juros</option>
+            </select>
+          </div>
         </div>
       </div>
 
+      <!-- DÉBITO -->
+      <div class="payment-panel" id="panel-debito">
+        <div class="form-grid">
+          <div class="form-group span-2">
+            <label class="form-label">Número do cartão <span>*</span></label>
+            <input class="form-input" type="text" placeholder="0000 0000 0000 0000" maxlength="19">
+          </div>
+          <div class="form-group span-2">
+            <label class="form-label">Nome impresso no cartão <span>*</span></label>
+            <input class="form-input" type="text" placeholder="Como está no cartão">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Validade <span>*</span></label>
+            <input class="form-input" type="text" placeholder="MM/AA" maxlength="5">
+          </div>
+          <div class="form-group">
+            <label class="form-label">CVV <span>*</span></label>
+            <input class="form-input" type="text" placeholder="•••" maxlength="4">
+          </div>
+        </div>
+      </div>
+
+      <!-- PIX -->
+      <div class="payment-panel" id="panel-pix">
+        <div class="pix-box">
+          <div class="pix-qr">QR CODE</div>
+          <p style="font-size:13px;color:#555;line-height:1.5;">Escaneie o QR Code ou copie a chave Pix abaixo. O pagamento é confirmado em até <strong>2 minutos</strong>.</p>
+          <div class="pix-key">
+            <span style="font-family:monospace;font-size:12px;color:#777;">00020126580014br.gov.bcb.pix0136naligan2026</span>
+            <button class="pix-copy-btn" onclick="this.textContent='Copiado!';setTimeout(()=>this.textContent='Copiar',2000)">Copiar</button>
+          </div>
+          <p style="font-size:11px;color:#aaa;">Válido por 30 minutos</p>
+        </div>
+      </div>
+
+      <!-- BOLETO -->
+      <div class="payment-panel" id="panel-boleto">
+        <div class="boleto-box">
+          <p style="font-size:13px;color:#666;">O boleto vence em <strong>3 dias úteis</strong>. Após o pagamento, a confirmação ocorre em até 2 dias úteis.</p>
+          <div class="boleto-line">34191.09008 62520.420008 18477.140008 1 10380000058650</div>
+          <button class="pix-copy-btn" style="background:#f0a500;align-self:flex-start;" onclick="this.textContent='Copiado!';setTimeout(()=>this.textContent='Copiar código',2000)">Copiar código</button>
+        </div>
+      </div>
     </div>
 
     <!-- FINALIZAR -->
-    <button class="btn-finalizar" onclick="finalizarPedido()">Gerar QR Code Pix</button>
+    <button class="btn-finalizar" onclick="finalizarPedido()">Confirmar Pagamento</button>
     <div class="seguro-row">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      Pagamento seguro com criptografia SSL · SigiloPay
+      Pagamento seguro com criptografia SSL
     </div>
 
   </div>
@@ -982,8 +1085,6 @@
       'ob-individual':     'OPEN BEER [Individual] 5º Lote',
     };
 
-    // Monta resumo e popula _pedido
-    let loteName = [];
     let html = '';
     Object.entries(qty).forEach(([k,v]) => {
       if (v > 0) {
@@ -991,12 +1092,8 @@
           <span><strong>${names[k]}</strong> × ${v}</span>
           <span>R$ ${(prices[k]*v).toLocaleString('pt-BR',{minimumFractionDigits:2})}</span>
         </div>`;
-        loteName.push(names[k] + ' x' + v);
       }
     });
-
-    _pedido.lote  = loteName.join(', ');
-    _pedido.valor = total;
 
     document.getElementById('order-summary-items').innerHTML = html;
     document.getElementById('checkout-total').textContent =
@@ -1007,164 +1104,19 @@
     window.scrollTo(0,0);
   }
 
-  // ============================================================
-  // CONFIGURAÇÃO SIGILOPAY
-  // ============================================================
-  var SIGILO_PUBLIC = ''; // Preencha com sua chave pública
-  var SIGILO_SECRET = ''; // Preencha com sua chave secreta
-  var SIGILO_URL    = 'https://workerjs.luiseleite1010.workers.dev/api/pix';
-  // ============================================================
-
-  var _pedido = {nome:'',email:'',cpf:'',tel:'',lote:'',valor:0};
-
   function finalizarPedido() {
-    var nome  = document.getElementById('f-nome').value.trim();
-    var cpf   = document.getElementById('f-cpf').value.trim();
-    var email = document.getElementById('f-email').value.trim();
-    var tel   = document.getElementById('f-tel').value.trim();
+    const nome = document.getElementById('f-nome').value.trim();
+    const cpf  = document.getElementById('f-cpf').value.trim();
+    const email= document.getElementById('f-email').value.trim();
+    const tel  = document.getElementById('f-tel').value.trim();
     if (!nome || !cpf || !email || !tel) {
       alert('Preencha pelo menos nome, CPF, e-mail e telefone para continuar.');
       return;
     }
-    _pedido.nome  = nome;
-    _pedido.email = email;
-    _pedido.cpf   = cpf.replace(/[^0-9]/g,'');
-    _pedido.tel   = tel;
-    abrirPix();
-  }
-
-  function abrirPix() {
-    document.getElementById('pixNomeLote').textContent = _pedido.lote;
-    document.getElementById('pixValorDisplay').textContent =
-      'R$ ' + _pedido.valor.toFixed(2).replace('.',',');
-    document.getElementById('pixLoading').style.display  = 'block';
-    document.getElementById('pixContent').style.display  = 'none';
-    document.getElementById('pixErro').style.display     = 'none';
-    document.getElementById('qrDiv').innerHTML = '';
-    document.getElementById('pixModal').style.display = 'block';
-    document.getElementById('pixModal').scrollTop = 0;
-    setTimeout(gerarPix, 50);
-  }
-
-  function gerarPix() {
-    document.getElementById('pixLoading').style.display = 'block';
-    document.getElementById('pixContent').style.display = 'none';
-    document.getElementById('pixErro').style.display    = 'none';
-
-    var identifier = 'naliga-' + Date.now() + '-' + Math.random().toString(36).slice(2,8);
-
-    fetch(SIGILO_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-public-key': SIGILO_PUBLIC,
-        'x-secret-key': SIGILO_SECRET
-      },
-      body: JSON.stringify({
-        identifier: identifier,
-        amount: _pedido.valor,
-        client: {
-          name:     _pedido.nome,
-          email:    _pedido.email,
-          phone:    _pedido.tel,
-          document: _pedido.cpf
-        },
-        metadata: {
-          provider: 'NaLigaEmSampa',
-          orderId:  identifier
-        }
-      })
-    })
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      document.getElementById('pixLoading').style.display = 'none';
-      if (data && data.pix && data.pix.code) {
-        var code   = data.pix.code;
-        var base64 = data.pix.base64 || null;
-        document.getElementById('pixCodigo').textContent = code;
-        document.getElementById('pixContent').style.display = 'block';
-        document.getElementById('pixModal').scrollTop = 0;
-        setTimeout(function(){
-          var div = document.getElementById('qrDiv');
-          div.innerHTML = '';
-          // Usa base64 da API se disponível, senão gera via QRCode.js
-          if (base64) {
-            var img = document.createElement('img');
-            img.style.cssText = 'width:200px;height:200px;display:block;';
-            img.src = base64;
-            div.appendChild(img);
-          } else if (typeof QRCode !== 'undefined') {
-            try {
-              new QRCode(div, {text:code, width:200, height:200,
-                colorDark:'#000', colorLight:'#fff',
-                correctLevel: QRCode.CorrectLevel.M});
-            } catch(e) { _qrFallback(div, code); }
-          } else {
-            _qrFallback(div, code);
-          }
-          document.getElementById('pixModal').scrollTop = 0;
-        }, 200);
-      } else {
-        var msg = (data && (data.errorDescription || data.message)) || 'Erro ao gerar PIX.';
-        document.getElementById('pixErroMsg').textContent = msg;
-        document.getElementById('pixErro').style.display = 'block';
-      }
-    })
-    .catch(function(){
-      document.getElementById('pixLoading').style.display = 'none';
-      document.getElementById('pixErroMsg').textContent = 'Falha de conexão. Verifique sua internet.';
-      document.getElementById('pixErro').style.display = 'block';
-    });
-  }
-
-  function _qrFallback(div, code) {
-    var img = document.createElement('img');
-    img.style.cssText = 'width:200px;height:200px;display:block;';
-    img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&ecc=M&data=' + encodeURIComponent(code);
-    img.onerror = function(){ div.innerHTML = '<p style="color:#999;font-size:11px;padding:10px;">Use o código abaixo</p>'; };
-    div.appendChild(img);
-  }
-
-  function fecharPix() {
-    document.getElementById('pixModal').style.display = 'none';
-  }
-
-  function copiarPix() {
-    var txt = document.getElementById('pixCodigo').textContent;
-    var btn = document.getElementById('btnCopiarPix');
-    if (navigator.clipboard && txt) {
-      navigator.clipboard.writeText(txt).then(function(){
-        btn.textContent = '✓ COPIADO!'; btn.style.background = '#1a4a1a';
-        setTimeout(function(){ btn.textContent = '📋 COPIAR CÓDIGO PIX'; btn.style.background = ''; }, 2500);
-      }).catch(function(){ fallbackCopy(txt, btn); });
-    } else { fallbackCopy(txt, btn); }
-  }
-
-  function fallbackCopy(txt, btn) {
-    var ta = document.createElement('textarea');
-    ta.value = txt; ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0;';
-    document.body.appendChild(ta); ta.focus(); ta.select();
-    try {
-      document.execCommand('copy');
-      btn.textContent = '✓ COPIADO!'; btn.style.background = '#1a4a1a';
-      setTimeout(function(){ btn.textContent = '📋 COPIAR CÓDIGO PIX'; btn.style.background = ''; }, 2500);
-    } catch(e){}
-    document.body.removeChild(ta);
-  }
-
-  function confirmarPagamento() {
-    fecharPix();
     document.getElementById('page-checkout').style.display = 'none';
-    document.getElementById('page-success').style.display  = 'flex';
+    document.getElementById('page-success').style.display = 'flex';
     window.scrollTo(0,0);
   }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    var modal = document.getElementById('pixModal');
-    if (modal) modal.addEventListener('click', function(e){
-      if (e.target === this) fecharPix();
-    });
-  });
 
   function setPayment(type, btn) {
     document.querySelectorAll('.payment-tab').forEach(t => t.classList.remove('active'));
@@ -1173,9 +1125,30 @@
     document.getElementById('panel-' + type).classList.add('active');
   }
 
-  // Live card preview removido (apenas Pix disponível)
-
+  // Live card preview
   document.addEventListener('DOMContentLoaded', () => {
+    const cardNum = document.getElementById('f-cardnum');
+    const cardName = document.getElementById('f-cardname');
+    const cardExp = document.getElementById('f-cardexp');
+    if (cardNum) {
+      cardNum.addEventListener('input', function() {
+        let v = this.value.replace(/\D/g,'').substring(0,16);
+        this.value = v.replace(/(.{4})/g,'$1 ').trim();
+        document.getElementById('card-num-display').textContent =
+          (this.value || '•••• •••• •••• ••••').padEnd(19,'•').replace(/[^•\d ]/g,'•');
+      });
+      cardName.addEventListener('input', function() {
+        document.getElementById('card-name-display').textContent = this.value.toUpperCase() || 'SEU NOME';
+      });
+      cardExp.addEventListener('input', function() {
+        let v = this.value.replace(/\D/g,'');
+        if (v.length >= 2) v = v.substring(0,2) + '/' + v.substring(2,4);
+        this.value = v;
+        document.getElementById('card-exp-display').textContent = this.value || 'MM/AA';
+      });
+    }
+
+    // CPF mask
     const cpfEl = document.getElementById('f-cpf');
     if (cpfEl) cpfEl.addEventListener('input', function() {
       let v = this.value.replace(/\D/g,'').substring(0,11);
@@ -1191,13 +1164,38 @@
       this.value = v;
     });
 
-    // CEP mask
+    // CEP mask + busca automática ViaCEP
     const cepEl = document.getElementById('f-cep');
-    if (cepEl) cepEl.addEventListener('input', function() {
-      let v = this.value.replace(/\D/g,'').substring(0,8);
-      v = v.replace(/(\d{5})(\d)/,'$1-$2');
-      this.value = v;
-    });
+    if (cepEl) {
+      cepEl.addEventListener('input', function() {
+        let v = this.value.replace(/\D/g,'').substring(0,8);
+        v = v.replace(/(\d{5})(\d)/,'$1-$2');
+        this.value = v;
+        if (v.replace(/\D/g,'').length === 8) buscarCepCheckout(v.replace(/\D/g,''));
+      });
+    }
+
+    async function buscarCepCheckout(cep) {
+      try {
+        const res = await fetch('https://viacep.com.br/ws/' + cep + '/json/');
+        const data = await res.json();
+        if (!data.erro) {
+          const rua = document.getElementById('f-rua');
+          const bairro = document.getElementById('f-bairro');
+          const cidade = document.getElementById('f-cidade');
+          const estado = document.getElementById('f-estado');
+          if (rua) rua.value = data.logradouro || '';
+          if (bairro) bairro.value = data.bairro || '';
+          if (cidade) cidade.value = data.localidade || '';
+          if (estado) {
+            const opt = [...estado.options].find(o => o.value === data.uf || o.text === data.uf);
+            if (opt) estado.value = opt.value;
+          }
+          const numEl = document.getElementById('f-num');
+          if (numEl) numEl.focus();
+        }
+      } catch(e) { /* falha silenciosa */ }
+    }
 
     // Nasc mask
     const nascEl = document.getElementById('f-nasc');
@@ -1226,81 +1224,5 @@
     window.scrollTo(0,0);
   }
 </script>
-<!-- MODAL PIX -->
-<div id="pixModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;overflow-y:auto;-webkit-overflow-scrolling:touch;">
-  <div style="background:#fff;border-top:4px solid #1aac8a;max-width:400px;width:calc(100% - 24px);margin:20px auto 40px;border-radius:0 0 12px 12px;">
-    <div style="padding:18px 20px 14px;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:#1a1a2e;">Pagamento Seguro</div>
-      <button onclick="fecharPix()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#999;line-height:1;">✕</button>
-    </div>
-    <div style="background:rgba(0,0,0,.03);padding:8px 16px;display:flex;justify-content:center;gap:16px;border-bottom:1px solid #f0f0f0;">
-      <span style="font-size:11px;color:#888;font-weight:600;">🔒 SSL SEGURO</span>
-      <span style="font-size:11px;color:#888;font-weight:600;">🏦 SIGILOPAY</span>
-      <span style="font-size:11px;color:#1aac8a;font-weight:600;">✅ VERIFICADO</span>
-    </div>
-    <div style="padding:14px 20px;background:#f8fffe;border-bottom:1px solid #e8f8f4;display:flex;justify-content:space-between;align-items:center;">
-      <div>
-        <div style="font-size:11px;color:#888;font-weight:600;letter-spacing:.05em;text-transform:uppercase;">Ingresso selecionado</div>
-        <div id="pixNomeLote" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;color:#1a1a2e;margin-top:2px;">—</div>
-        <div style="font-size:11px;color:#aaa;margin-top:2px;">Na Liga em Sampa · Sáb 23/Mai</div>
-      </div>
-      <div style="text-align:right;">
-        <div style="font-size:11px;color:#888;margin-bottom:2px;text-transform:uppercase;font-weight:600;">Total</div>
-        <div id="pixValorDisplay" style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:#1aac8a;">R$ 0,00</div>
-      </div>
-    </div>
-    <div style="padding:20px;">
-      <div id="pixLoading" style="text-align:center;padding:32px 0;">
-        <div style="width:40px;height:40px;border:3px solid rgba(26,172,138,.2);border-top:3px solid #1aac8a;border-radius:50%;margin:0 auto 12px;animation:spin 1s linear infinite;"></div>
-        <p style="font-size:13px;color:#888;letter-spacing:.05em;text-transform:uppercase;">Gerando seu PIX seguro...</p>
-      </div>
-      <div id="pixContent" style="display:none;">
-        <div style="display:flex;gap:0;margin-bottom:14px;background:#f8f8f8;border:1px solid #eee;overflow:hidden;border-radius:8px;">
-          <div style="flex:1;padding:10px 6px;text-align:center;border-right:1px solid #eee;"><div style="font-size:18px;">📱</div><div style="font-size:10px;color:#888;font-weight:600;margin-top:3px;line-height:1.3;">Abra seu<br>banco</div></div>
-          <div style="flex:1;padding:10px 6px;text-align:center;border-right:1px solid #eee;"><div style="font-size:18px;">📷</div><div style="font-size:10px;color:#888;font-weight:600;margin-top:3px;line-height:1.3;">Escaneie<br>o QR</div></div>
-          <div style="flex:1;padding:10px 6px;text-align:center;border-right:1px solid #eee;"><div style="font-size:18px;">✅</div><div style="font-size:10px;color:#888;font-weight:600;margin-top:3px;line-height:1.3;">Confirme<br>o valor</div></div>
-          <div style="flex:1;padding:10px 6px;text-align:center;"><div style="font-size:18px;">🎟️</div><div style="font-size:10px;color:#888;font-weight:600;margin-top:3px;line-height:1.3;">Receba<br>ingresso</div></div>
-        </div>
-        <div style="text-align:center;margin-bottom:14px;">
-          <div style="font-size:11px;color:#888;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;">📱 Escaneie com o app do seu banco</div>
-          <div style="display:inline-block;padding:10px;background:#fff;border:2px solid rgba(26,172,138,.4);line-height:0;border-radius:4px;">
-            <div id="qrDiv"></div>
-          </div>
-          <div style="font-size:11px;color:#1aac8a;margin-top:8px;">● Confirmação instantânea · Válido por 24 horas</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin:12px 0;"><div style="flex:1;height:1px;background:#eee;"></div><span style="font-size:11px;color:#aaa;white-space:nowrap;">ou copie o código PIX</span><div style="flex:1;height:1px;background:#eee;"></div></div>
-        <div style="background:#f8f8f8;border:1px solid #eee;padding:10px 12px;border-radius:8px;margin-bottom:10px;">
-          <div style="font-size:10px;color:#aaa;font-weight:600;letter-spacing:.08em;margin-bottom:5px;text-transform:uppercase;">Código PIX — Copia e Cola</div>
-          <div id="pixCodigo" style="font-family:monospace;font-size:11px;color:#666;word-break:break-all;line-height:1.5;margin-bottom:8px;">—</div>
-          <button id="btnCopiarPix" onclick="copiarPix()" style="width:100%;background:#1a1a2e;color:#fff;border:none;padding:10px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:.1em;cursor:pointer;border-radius:6px;transition:background .2s;">📋 COPIAR CÓDIGO PIX</button>
-        </div>
-        <div style="background:rgba(26,172,138,.06);border:1px solid rgba(26,172,138,.2);padding:10px 12px;margin-bottom:12px;border-radius:8px;display:flex;gap:8px;align-items:flex-start;">
-          <span style="font-size:16px;flex-shrink:0;">🛡️</span>
-          <div style="font-size:12px;color:#1aac8a;line-height:1.6;"><strong>Pagamento 100% seguro via SigiloPay.</strong> Seu ingresso será enviado por e-mail assim que o pagamento for confirmado.</div>
-        </div>
-        <div style="display:flex;gap:8px;margin-top:4px;">
-          <button onclick="fecharPix()" style="flex:1;background:transparent;border:1px solid #ddd;color:#888;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.05em;padding:12px;cursor:pointer;border-radius:8px;transition:border-color .2s;">Cancelar</button>
-          <button onclick="confirmarPagamento()" style="flex:2;background:#1aac8a;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.05em;padding:12px;border:none;cursor:pointer;border-radius:8px;transition:background .2s;">✓ JÁ PAGUEI</button>
-        </div>
-      </div>
-      <div id="pixErro" style="display:none;text-align:center;padding:24px 0;">
-        <div style="font-size:36px;margin-bottom:10px;">⚠️</div>
-        <p id="pixErroMsg" style="color:#e63946;font-size:14px;margin-bottom:14px;">Erro ao gerar PIX. Tente novamente.</p>
-        <button onclick="gerarPix()" style="background:#1aac8a;color:#fff;border:none;padding:10px 24px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;cursor:pointer;border-radius:8px;">Tentar novamente</button>
-      </div>
-    </div>
-    <div style="padding:10px 20px;background:#f8f8f8;border-top:1px solid #eee;text-align:center;border-radius:0 0 12px 12px;">
-      <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:4px;">
-        <span style="font-size:10px;color:#bbb;">🔒 SSL 256-bit</span>
-        <span style="font-size:10px;color:#bbb;">🏦 SigiloPay</span>
-        <span style="font-size:10px;color:#bbb;">✅ Ambiente Seguro</span>
-      </div>
-      <div style="font-size:10px;color:#ccc;">Seus dados são criptografados e protegidos.</div>
-    </div>
-  </div>
-</div>
-
-<style>@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}</style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </body>
 </html>
