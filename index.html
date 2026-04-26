@@ -1148,8 +1148,11 @@
     window.scrollTo(0,0);
   }
 
-  document.getElementById('pixModal').addEventListener('click', function(e){
-    if (e.target === this) fecharPix();
+  document.addEventListener('DOMContentLoaded', function() {
+    var modal = document.getElementById('pixModal');
+    if (modal) modal.addEventListener('click', function(e){
+      if (e.target === this) fecharPix();
+    });
   });
 
   function setPayment(type, btn) {
@@ -1159,30 +1162,9 @@
     document.getElementById('panel-' + type).classList.add('active');
   }
 
-  // Live card preview
-  document.addEventListener('DOMContentLoaded', () => {
-    const cardNum = document.getElementById('f-cardnum');
-    const cardName = document.getElementById('f-cardname');
-    const cardExp = document.getElementById('f-cardexp');
-    if (cardNum) {
-      cardNum.addEventListener('input', function() {
-        let v = this.value.replace(/\D/g,'').substring(0,16);
-        this.value = v.replace(/(.{4})/g,'$1 ').trim();
-        document.getElementById('card-num-display').textContent =
-          (this.value || '•••• •••• •••• ••••').padEnd(19,'•').replace(/[^•\d ]/g,'•');
-      });
-      cardName.addEventListener('input', function() {
-        document.getElementById('card-name-display').textContent = this.value.toUpperCase() || 'SEU NOME';
-      });
-      cardExp.addEventListener('input', function() {
-        let v = this.value.replace(/\D/g,'');
-        if (v.length >= 2) v = v.substring(0,2) + '/' + v.substring(2,4);
-        this.value = v;
-        document.getElementById('card-exp-display').textContent = this.value || 'MM/AA';
-      });
-    }
+  // Live card preview removido (apenas Pix disponível)
 
-    // CPF mask
+  document.addEventListener('DOMContentLoaded', () => {
     const cpfEl = document.getElementById('f-cpf');
     if (cpfEl) cpfEl.addEventListener('input', function() {
       let v = this.value.replace(/\D/g,'').substring(0,11);
