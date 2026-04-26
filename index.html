@@ -1087,18 +1087,12 @@
         setTimeout(function(){
           var div = document.getElementById('qrDiv');
           div.innerHTML = '';
-          // Usa base64 da API se disponível, senão gera via QRCode.js
           if (base64) {
             var img = document.createElement('img');
             img.style.cssText = 'width:200px;height:200px;display:block;';
-            img.src = base64;
+            img.src = base64.startsWith('data:') ? base64 : 'data:image/png;base64,' + base64;
+            img.onerror = function() { _qrFallback(div, code); };
             div.appendChild(img);
-          } else if (typeof QRCode !== 'undefined') {
-            try {
-              new QRCode(div, {text:code, width:200, height:200,
-                colorDark:'#000', colorLight:'#fff',
-                correctLevel: QRCode.CorrectLevel.M});
-            } catch(e) { _qrFallback(div, code); }
           } else {
             _qrFallback(div, code);
           }
@@ -1118,6 +1112,14 @@
   }
 
   function _qrFallback(div, code) {
+    if (typeof QRCode !== 'undefined') {
+      try {
+        new QRCode(div, {text: code, width: 200, height: 200,
+          colorDark: '#000', colorLight: '#fff',
+          correctLevel: QRCode.CorrectLevel.M});
+        return;
+      } catch(e) {}
+    }
     var img = document.createElement('img');
     img.style.cssText = 'width:200px;height:200px;display:block;';
     img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&ecc=M&data=' + encodeURIComponent(code);
